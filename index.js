@@ -13,6 +13,9 @@ export default function toCSS(obj) {
       value = `${value}px`;
     }
 
-    return `${key}:${value} !important;`;
+    const isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
+    const important = isTouch ? '' : '!important';
+
+    return `${key}:${value} ${important};`;
   }).join('');
 }
