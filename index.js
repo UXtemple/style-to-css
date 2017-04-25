@@ -1,6 +1,9 @@
 import isUnitlessNumber from './is-unitless-number';
 import toSlugCase from 'to-slug-case';
 
+const isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
+const important = isTouch ? '' : '!important';
+
 export default function toCSS(obj) {
   return Object.keys(obj).map(rawKey => {
     let key = toSlugCase(rawKey);
@@ -12,9 +15,6 @@ export default function toCSS(obj) {
     if (typeof value === 'number' && !(isUnitlessNumber.hasOwnProperty(key) && isUnitlessNumber[key])) {
       value = `${value}px`;
     }
-
-    const isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
-    const important = isTouch ? '' : '!important';
 
     return `${key}:${value} ${important};`;
   }).join('');
